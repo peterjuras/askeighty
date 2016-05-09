@@ -13,3 +13,6 @@ socket.on('active', function(message) {
 socket.on('response', function(message) {
   console.log(message);
 });
+socket.on('error', function(message) {
+  console.log(message);
+})
