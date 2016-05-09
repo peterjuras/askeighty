@@ -2,8 +2,11 @@
 
 const express = require('express');
 const app = express();
+const twilio = require('twilio');
 
-const twilio = require('./lib/twilio');
-twilio.sendTestMessage();
+const twilioRoute = require('./lib/twilio');
+// twilio.sendTestMessage();
 
-// app.listen(process.env.port || 3000);
+app.post('/twilio/response', twilio.webhook(), twilioRoute.response);
+
+app.listen(process.env.port || 3000);
