@@ -1,0 +1,24 @@
+{
+  "name": "askeighty",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/peterjuras/askeighty.git"
+  },
+  "author": "Peter Juras",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/peterjuras/askeighty/issues"
+  },
+  "homepage": "https://github.com/peterjuras/askeighty#readme",
+  "dependencies": {
+    "express": "^4.13.4",
+    "twilio": "^2.9.1"
+  }
+}
