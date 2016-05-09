@@ -17,4 +17,4 @@ socket.on('response', function(message) {
 });
 socket.on('twilio-error', function(message) {
   console.log(message);
-})
+});
