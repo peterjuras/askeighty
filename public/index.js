@@ -1,6 +1,9 @@
 var socket = io();
 
-socket.emit('send', 'Hi');
+function sendMessage() {
+  socket.emit('send', document.getElementById('message').value);
+}
+
 socket.on('queue', function(message) {
   console.log(message);
 });
