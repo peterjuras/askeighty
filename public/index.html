@@ -4,12 +4,25 @@
 <head>
     <title>Ask Eighty API Demo</title>
     <script src="//cdnjs.cloudflare.com/ajax/libs/socket.io/1.4.6/socket.io.min.js"></script>
+    <style>
+    body {
+      padding: 50px;
+      font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+    }
+
+    a {
+      color: #00B7FF;
+    }
+    </style>
 </head>
 
 <body>
-  <script src="index.js"></script>
-  <input id="message" type="text" />
+  <h1>Ask Eighty API demo</h1>
+  <input id="message" type="text" maxlength="160" />
   <input id="sendButton" type="button" onclick="sendMessage()" value="Send" />
+  <p id="status">Enter your message!</p>
+
+  <script src="index.js"></script>
 </body>
 
 </html>
