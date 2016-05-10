@@ -17,19 +17,6 @@ app.post('/twilio/response', twilio.webhook({ validate: false }), twilioRoute.re
 
 const server = require('http').createServer(app);
 const io = require('socket.io')(server);
-const redis = require('redis').createClient;
-const adapter = require('socket.io-redis');
-const pub = redis(process.env.REDIS_PORT, process.env.REDIS_HOST, {
-  auth_pass: process.env.REDIS_PWD
-});
-const sub = redis(process.env.REDIS_PORT, process.env.REDIS_HOST, {
-  return_buffers: true,
-  auth_pass: process.env.REDIS_PWD
-});
-io.adapter(adapter({
-  pubClient: pub,
-  subClient: sub
-}));
 
 server.listen(process.env.port || 3000);
 
