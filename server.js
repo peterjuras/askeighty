@@ -10,7 +10,7 @@ const onConnect = require('./lib/socket').onConnect;
 const twilioRoute = require('./lib/twilio');
 
 app.use(express.static(path.join(__dirname, 'public')));
-app.use(bodyparser.json());
+app.use(bodyparser.urlencoded({ extended: false }));
 app.post('/twilio/response', twilio.webhook({ validate: false }), twilioRoute.response);
 
 const server = require('http').createServer(app);
