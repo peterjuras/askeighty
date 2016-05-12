@@ -63,8 +63,7 @@ function sendMessage(message) {
 // message: "1" => There is 1 user in front of you in the queue
 socket.on('queue', function(message) {
 	reveal_awnser();
-  reply_callback( 'Adrian is busy and you are in the queue! There are ' +
-    message + ' people ahead of you!');
+  reply_callback( 'Adrian is busy and you are in the queue! There are ' + message + ' people ahead of you!');
 });
 
 // Received when the current user is the active user and the message has been sent to Adrian.
