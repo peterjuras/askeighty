@@ -1,24 +1,206 @@
-<!DOCTYPE html>
 <html>
-
 <head>
-    <title>Ask Eighty API Demo</title>
+	<meta charset="UTF-8">
+	<title>askeighty.com</title>
+	<link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css">
+	<link href='https://fonts.googleapis.com/css?family=Ubuntu' rel='stylesheet' type='text/css'>
+	<script src="bower_components/jquery/dist/jquery.js"></script>
+	<script src="bower_components/typed.js/js/typed.js"></script>
+
     <script src="//cdnjs.cloudflare.com/ajax/libs/socket.io/1.4.6/socket.io.min.js"></script>
-    <style>
-    body {
-      padding: 50px;
-      font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
-    }
-    </style>
+	<script>
+
+
+var socket = io();
+
+$(document).ready(function () {
+	console.log("yay");
+	$('.awnser, .question').hide();
+
+	$('.welcome').show('slow');
+	      $(".welcome p").typed({
+        strings: ["Hey yo!!", "I'm eighty!", "or ^300 80", "Ask me anything!"],
+        typeSpeed: 0.2,
+        callback: reveal_dialog,
+        showCursor: true
+
+      });
+	$('.btn').on('click', send);
+});
+
+function send() {
+	var text = $('textarea').val();
+	console.log(text);
+	$('.question').html(text);
+	sendMessage(text);
+}
+
+function reveal_dialog() {
+	$('.question').first().show('slow');
+}
+function reveal_awnser() {
+	$('.reply').show('slow');
+}
+function reply_callback(msg) {
+	$('.reply').css('font-style', "regular");
+	$(".reply p").typed({
+        strings: [msg],
+        showCursor: true
+      });
+}
+
+
+
+
+function sendMessage(message) {
+  // Sends an SMS message to the server, that is either sent directly or put into the queue.
+  // Usage:
+  // socket.emit('send', 'The message to Adrian');
+  socket.emit('send', message);
+}
+
+// Received when the position in the queue for this user has been updated. If the event is
+// received after a sendMessage call, it means that the user is in the queue.
+// Example
+// message: "1" => There is 1 user in front of you in the queue
+socket.on('queue', function(message) {
+	reveal_awnser();
+  reply_callback( 'Adrian is busy and you are in the queue! There are ' +
+    message + ' people ahead of you!');
+});
+
+// Received when the current user is the active user and the message has been sent to Adrian.
+// Example
+// message: true
+socket.on('active', function(message) {
+	reveal_awnser();
+  reply_callback( '80 is typing...');
+});
+
+// Received when Adrian responds to a message
+// Example
+// message: "Adrian's reply" => Adrian send the text: "Adrian's reply"
+socket.on('response', function(message) {
+  reply_callback( "Adrian's response: " + message);
+});
+
+	</script>
+	<style>
+		body {
+			font-family: 'Ubuntu', sans-serif;
+			background: rgba(34,111,204, 0.1);
+		}
+		.typed-cursor{
+    opacity: 1;
+    -webkit-animation: blink 0.7s infinite;
+    -moz-animation: blink 0.7s infinite;
+    animation: blink 0.7s infinite;
+}
+@keyframes blink{
+    0% { opacity:1; }
+    50% { opacity:0; }
+    100% { opacity:1; }
+}
+@-webkit-keyframes blink{
+    0% { opacity:1; }
+    50% { opacity:0; }
+    100% { opacity:1; }
+}
+@-moz-keyframes blink{
+    0% { opacity:1; }
+    50% { opacity:0; }
+    100% { opacity:1; }
+}
+	img {
+		width: 120%;
+		margin-top: 60px;
+	}
+		h1 {
+			color: rgb(34,111,204);
+			margin: 60px 0;
+			font-size: 5em;
+			font-weight: bold;
+			text-align: center;
+			text-shadow: 0 1px 0 #ccc,
+               0 2px 0 #c9c9c9,
+               0 3px 0 #bbb,
+               0 4px 0 #b9b9b9,
+               0 5px 0 #aaa,
+               0 6px 1px rgba(0,0,0,.1),
+               0 0 5px rgba(0,0,0,.1),
+               0 1px 3px rgba(0,0,0,.3),
+               0 3px 5px rgba(0,0,0,.2),
+               0 5px 10px rgba(0,0,0,.25),
+               0 10px 10px rgba(0,0,0,.2),
+               0 20px 20px rgba(0,0,0,.15);
+		}
+		p {
+			display: inline;
+		}
+		.hi {
+			background: #000;
+		}
+		textarea {
+			background: rgba(256, 256, 256 , 0.3);
+			width: 100%;
+			border: 1px solid #fff;
+			padding: 10px;
+			border-radius: 3px;
+		}
+		.well {
+			font-size: 2em;
+		}
+		.question {
+			background: rgb(34,111,204);
+			margin-left: 40px;
+		}
+		.awnser {
+			margin-right: 40px;
+		}
+		.question, .question textarea:focus {
+			color: #fff;
+		}
+		.btn-container {
+			margin-top: 20px;
+			overflow: auto;
+			color: #000;
+
+		}
+		.btn {
+			float: right;
+		}
+		.muted {
+			font-style: italic;
+			color: gray;
+		}
+	</style>
 </head>
-
 <body>
-  <h1>Ask Eighty API demo</h1>
-  <input id="message" type="text" maxlength="160" />
-  <input id="sendButton" type="button" onclick="sendMessage()" value="Send" />
-  <p id="status">Enter your message!</p>
+	<div class="container">
+		<div class="col-md-4">
+			<img class="image-fluid" src="80.png" alt="" class="">
 
-  <script src="index.js"></script>
+		</div>
+		<div class="col-md-8">
+			<h1>askEIGHTY.com</h1>
+			<div class="well well-lg awnser welcome">
+			<p>
+				Hey yo! I'm 80! Ask me anything!
+			</p>
+			</div>
+			<div class="well well-lg question">
+				<textarea type="text" text="Ask Me anything"></textarea>
+				<div class="btn-container">
+					<button class="btn btn-lg">Send</button>
+				</div>
+			</div>
+
+			<div class="well well-lg awnser muted reply">
+				<p>
+					80 is typing...
+				</p>
+			</div>
+		</div>
+	</div>
 </body>
-
 </html>
