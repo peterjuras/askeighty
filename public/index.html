@@ -78,7 +78,7 @@ socket.on('active', function(message) {
 // Example
 // message: "Adrian's reply" => Adrian send the text: "Adrian's reply"
 socket.on('response', function(message) {
-  reply_callback( "Adrian's response: " + message);
+  reply_callback(message);
 });
 
 	</script>
