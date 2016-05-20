@@ -55,6 +55,7 @@ function sendMessage(message) {
   // Usage:
   // socket.emit('send', 'The message to Adrian');
   socket.emit('send', message);
+  reply_callback( '80 is typing...');
 }
 
 // Received when the position in the queue for this user has been updated. If the event is
@@ -78,6 +79,7 @@ socket.on('active', function(message) {
 // Example
 // message: "Adrian's reply" => Adrian send the text: "Adrian's reply"
 socket.on('response', function(message) {
+	reveal_awnser();
   reply_callback(message);
 });
 

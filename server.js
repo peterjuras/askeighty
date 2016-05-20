@@ -19,3 +19,7 @@ const io = require('socket.io')(server);
 server.listen(process.env.port || 3000);
 
 io.on('connection', onConnect);
+
+module.exports = {
+  io: io
+};
